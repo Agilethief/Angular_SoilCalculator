@@ -3,5 +3,6 @@
     "activityBar.background": "#0C3423",
     "titleBar.activeBackground": "#114932",
     "titleBar.activeForeground": "#F4FDF9"
-  }
+  },
+  "djlint.showInstallError": false
 }

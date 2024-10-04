@@ -1,0 +1,28 @@
+<h2>Simple soil calculator</h2>
+
+<form [formGroup]="calculatorForm"
+      (submit)="submitCalculatorForm()">
+  <div class="form-input">
+    <label for="x">X dimension in mm</label>
+    <input type="number"
+           id="x"
+           formControlName="x">
+  </div>
+  <div class="form-input">
+    <label for="y">Y dimension in mm</label>
+    <input type="number"
+           id="y"
+           formControlName="y">
+  </div>
+  <div class="form-input">
+    <label for="z">Z dimension in mm</label>
+    <input type="number"
+           id="z"
+           formControlName="z">
+  </div>
+  <button type="submit">Calculate</button>
+</form>
+
+@if(calculated_soil > 0) {
+<p>Calculated soil volume: {{ calculated_soil }} m³</p>
+}
