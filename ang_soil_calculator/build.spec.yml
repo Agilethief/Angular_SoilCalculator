@@ -15,6 +15,9 @@ phases:
   pre_build:
     commands:
       - echo installing dependencies...
+      - ls
+      - cd ang_soil_calculator
+      - ls
       - cd ang_soil_calculator
       - ls
       - npm i -g @angular/cli
