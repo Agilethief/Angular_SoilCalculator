@@ -26,4 +26,4 @@ artifacts:
   files:
     - "**/*"
   discard-paths: no
-  base-directory: dist/ang-soil-calculator
+  base-directory: ang_soil_calculator/dist/ang_soil_calculator
