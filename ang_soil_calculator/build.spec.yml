@@ -15,18 +15,13 @@ phases:
   pre_build:
     commands:
       - echo installing dependencies...
-      - ls
-      - cd ang_soil_calculator
-      - ls
-      - cd ang_soil_calculator
-      - ls
       - npm i -g @angular/cli
-      - npm install
+      - cd ang_soil_calculator && npm install
   build:
     commands:
       - echo testing...
       # - echo building...
-      - ng build --prod
+      - cd ang_soil_calculator && ng build --prod
 artifacts:
   files:
     - "**/*"
