@@ -1,2 +1,51 @@
-<canvas id="canvas-box"
-        #mycanvas></canvas>
+<div class="canvascontainer">
+  <canvas id="canvas-box"
+          #mycanvas></canvas>
+
+  <div class="canvasgui">
+
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="dimensionsForm"
+              (submit)="submitDimensionChange()">
+          <div class="form-group">
+            <label for="x">X dimension in M</label>
+            <input class="form-control"
+                   type="number"
+                   id="x"
+                   formControlName="x">
+
+
+            <label for="y">Y dimension in M</label>
+            <input class="form-control"
+                   type="number"
+                   id="y"
+                   formControlName="y">
+
+
+            <label for="z">Z dimension in M</label>
+            <input class="form-control"
+                   type="number"
+                   id="z"
+                   formControlName="z">
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card"
+         style="width: 70%;">
+      @if(calculated_soil > 0) {
+      <p>Calculated soil volume: {{ calculated_soil }} m³</p>
+      }
+      @else {<p>
+        Please enter the dimensions of the soil
+      </p>}
+    </div>
+  </div>
+
+
+</div>
+
+
+<script type="text/javascript"
+        src="assets/scripts/threesetup.js"></script>

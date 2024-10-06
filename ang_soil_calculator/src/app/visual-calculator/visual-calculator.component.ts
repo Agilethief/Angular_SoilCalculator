@@ -1,17 +1,61 @@
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  AfterViewInit,
+  ViewChild,
+  OnInit,
+} from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three-stdlib';
-import { RGBELoader } from 'three-stdlib';
+import { RGBELoader, TransformControls } from 'three-stdlib';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { EnvParams } from './env-params.model';
 
 @Component({
   selector: 'app-visual-calculator',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './visual-calculator.component.html',
   styleUrl: './visual-calculator.component.css',
 })
-export class VisualCalculatorComponent implements AfterViewInit {
+export class VisualCalculatorComponent implements AfterViewInit, OnInit {
+  calculated_soil = 0;
+
+  dimensionsForm = new FormGroup({
+    x: new FormControl('x'),
+    y: new FormControl('y'),
+    z: new FormControl('z'),
+  });
+
+  submitDimensionChange() {
+    console.log('Form submitted: ', this.dimensionsForm.value);
+    this.changeBoxSize(
+      Number(this.dimensionsForm.value.x),
+      Number(this.dimensionsForm.value.y),
+      Number(this.dimensionsForm.value.z)
+    );
+
+    this.calculate_soil(
+      Number(this.dimensionsForm.value.x),
+      Number(this.dimensionsForm.value.y),
+      Number(this.dimensionsForm.value.z)
+    );
+  }
+
+  calculate_soil(x: number, y: number, z: number) {
+    const m3 = x * y * z;
+    console.log('Calculating dimensions: ', x, y, z);
+    console.log('Calculating soil: ', m3);
+    this.calculated_soil = m3;
+  }
+
+  ngOnInit(): void {
+    this.dimensionsForm.valueChanges.subscribe(() => {
+      this.submitDimensionChange();
+    });
+  }
+
   @ViewChild('mycanvas', { static: false })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -33,7 +77,7 @@ export class VisualCalculatorComponent implements AfterViewInit {
     this.initThreejs();
     // Load environment map
     this.loadEnvMap();
-    this.setupLight();
+    //this.setupLight();
     this.animate();
     //this.render(); // Only when not using animate
   }
@@ -67,9 +111,9 @@ export class VisualCalculatorComponent implements AfterViewInit {
     this.controls.maxDistance = 500;
     this.controls.maxPolarAngle = Math.PI / 2;
 
-    const geometry = new THREE.BoxGeometry(10, 5, 3);
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
+      color: 'rgb(250, 0,0)',
       metalness: this.envParams.metalness,
       roughness: this.envParams.roughness,
     });
@@ -78,10 +122,12 @@ export class VisualCalculatorComponent implements AfterViewInit {
 
     // Ground plane
     const planeGeometry = new THREE.PlaneGeometry(200, 200);
-    const planeMaterial = new THREE.MeshBasicMaterial();
+    const planeMaterial = new THREE.MeshBasicMaterial({
+      color: 'rgb(140, 120, 110)',
+    });
 
     const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-    planeMesh.position.y = -5;
+    //planeMesh.position.y = -5;
     planeMesh.rotation.x = -Math.PI * 0.5;
     this.scene.add(planeMesh);
   }
@@ -121,5 +167,9 @@ export class VisualCalculatorComponent implements AfterViewInit {
 
   private render(): void {
     this.renderer.render(this.scene, this.camera);
+  }
+
+  private changeBoxSize(x: number, y: number, z: number) {
+    this.cube.scale.set(x, y, z);
   }
 }
