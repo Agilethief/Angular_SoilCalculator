@@ -1,28 +1,44 @@
-<h2>Simple soil calculator</h2>
+<div class="card"
+     style="width: 32rem;">
+  <div class="card-body">
+    <h2 class="card-header">Simple soil calculator</h2>
 
-<form [formGroup]="calculatorForm"
-      (submit)="submitCalculatorForm()">
-  <div class="form-input">
-    <label for="x">X dimension in mm</label>
-    <input type="number"
-           id="x"
-           formControlName="x">
-  </div>
-  <div class="form-input">
-    <label for="y">Y dimension in mm</label>
-    <input type="number"
-           id="y"
-           formControlName="y">
-  </div>
-  <div class="form-input">
-    <label for="z">Z dimension in mm</label>
-    <input type="number"
-           id="z"
-           formControlName="z">
-  </div>
-  <button type="submit">Calculate</button>
-</form>
+    <form [formGroup]="calculatorForm"
+          (submit)="submitCalculatorForm()">
+      <div class="form-group">
+        <label for="x">X dimension in mm</label>
+        <input class="form-control"
+               type="number"
+               id="x"
+               formControlName="x">
 
-@if(calculated_soil > 0) {
-<p>Calculated soil volume: {{ calculated_soil }} m³</p>
-}
+
+        <label for="y">Y dimension in mm</label>
+        <input class="form-control"
+               type="number"
+               id="y"
+               formControlName="y">
+
+
+        <label for="z">Z dimension in mm</label>
+        <input class="form-control"
+               type="number"
+               id="z"
+               formControlName="z">
+      </div>
+      <button type="submit"
+              class="btn btn-primary">Calculate</button>
+    </form>
+
+  </div>
+  <div class="card"
+       style="width: 70%;">
+    @if(calculated_soil > 0) {
+    <p>Calculated soil volume: {{ calculated_soil }} m³</p>
+    }
+    @else {<p>
+      Please enter the dimensions of the soil
+    </p>}
+  </div>
+
+</div>
